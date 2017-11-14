@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import {
     Container, Header, Title, Content, Button, Body, Right, Icon, Text, Item, Input, Label, List, ListItem,
-    Card, CardItem
+    Card, CardItem, SwipeRow
 } from 'native-base';
 import { connect } from 'react-redux';
-import { addRoutine,getAllRoutines, changeText } from './../actions/actions'
+import { changeText } from './../actions/actions'
+import { createRoutine, getRoutines, deleteRoutine } from './../actions/routineActions'
 
 const styles = StyleSheet.create({
     input: {
@@ -29,11 +30,11 @@ class HomeScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
         title: "Welcome",
     });
-    componentWillMount(){
-        this.props.getAllRoutines();
+    componentWillMount() {
+        this.props.getRoutines();
     }
     render() {
-        const { changeText, addRoutine, routines, text, navigation } = this.props
+        const { changeText, createRoutine, deleteRoutine, routines, text, navigation } = this.props
         return (
             <Container>
                 <Content padder keyboardShouldPersistTaps='handled'>
@@ -41,19 +42,32 @@ class HomeScreen extends React.Component {
                         <Input autoCapitalize='words' value={text} onChangeText={(text) => changeText(text)} placeholder="eg. Leg Day, Crossfit, etc. " />
                     </Item>
                     <Item style={styles.button}>
-                        <Button onPress={() => addRoutine(text)}><Text>ADD ROUTINE</Text></Button>
+                        <Button onPress={() => createRoutine(text)}><Text>ADD ROUTINE</Text></Button>
                     </Item>
                     {routines.length > 0 &&
                         <Card>
-                            <List dataArray={routines}
+                            <List
+                                dataArray={routines}
                                 renderRow={(item) =>
-                                    <ListItem style={{ margin: 5 }} onPress={() => navigation.navigate("Routine", item)}>
+                                    <ListItem style={{ margin: 5 }}
+                                        onPress={() => navigation.navigate("Routine", item)}
+                                        onLongPress={
+                                            () => Alert.alert("Delete","Are you sure you want to delete '" + item.name + "' routine?",
+                                                [
+                                                    { text: "Delete", onPress: () => deleteRoutine(item._id) },
+                                                    { text: "Cancel" }
+                                                ]
+                                            )
+                                        }
+                                    >
                                         <CardItem >
                                             <Body><Text style={styles.bold}>{item.name}</Text></Body>
                                             <Right><Icon name="arrow-forward" /></Right>
                                         </CardItem>
+
                                     </ListItem>
-                                }>
+                                }
+                            >
                             </List>
                         </Card>
                     }
@@ -70,5 +84,5 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { addRoutine, getAllRoutines, changeText })(HomeScreen);
+export default connect(mapStateToProps, { createRoutine, getRoutines, deleteRoutine, changeText })(HomeScreen);
 

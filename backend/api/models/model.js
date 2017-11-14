@@ -2,26 +2,49 @@ import mongoose, { Schema } from 'mongoose';
 
 var logSchema = new Schema({
     reps: {
-        type: Number
+        type: Number,
+        required: true                
     },
     weight: {
-        type: Number
+        type: Number,
+        required: true                
     },
     date: {
         type: Date,
         default: Date.now()
-    }
+    },
+    exerciseID: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    routineID: {
+        type: Schema.Types.ObjectId,
+        required: true        
+    },
+    user: {
+        type: String,
+        default: 'sammy'
+    },
 })
 
 var exerciseSchema = new Schema({
     name: {
         type: String,
+        unique: true,
+        required: true        
     },
     date: {
         type: Date,
         default: Date.now()
     },
-    log: [logSchema]
+    routineID: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    user: {
+        type: String,
+        default: 'sammyjjjjjj'
+    }
 })
 
 var routineSchema = new Schema({
@@ -36,10 +59,11 @@ var routineSchema = new Schema({
     },
     user: {
         type: String,
-        default: 'sammy'
-    },
-    exercises: [exerciseSchema]
+        default: 'sammymmmmmmmeringferin'
+    }
 });
 
 // Export Mongoose model
-export default mongoose.model('routine', routineSchema);
+export var Routine =  mongoose.model('routine', routineSchema);
+export var Exercise =  mongoose.model('exercise', exerciseSchema);
+export var Log =  mongoose.model('log', logSchema);

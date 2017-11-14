@@ -5,9 +5,13 @@ import Routine from './components/RoutineScreen';
 import Exercise from './components/ExcerciseScreen';
 import { Provider } from 'react-redux';
 import { store } from './store'
+import Config from './config'
+import axios from 'axios'
+
+axios.defaults.baseURL = Config.dev.baseUrl;
 
 const Nav = StackNavigator({
-    Home: { screen: Home },    
+    Home: { screen: Home },
     Routine: { screen: Routine },
     Exercise: { screen: Exercise }
 });

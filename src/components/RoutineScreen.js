@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 import {
     Container, Header, Title, Content, Button, Body, Right, Icon, Text, Item, Input, Label, List, ListItem,
-    Card, CardItem
+    Card, CardItem, SwipeRow
 } from 'native-base';
 import { connect } from 'react-redux';
-import { addExercise, changeText } from './../actions/actions'
+import { changeText } from './../actions/actions'
+import { getExercises, createExercise, deleteExercise } from './../actions/exerciseActions'
+
 
 const styles = StyleSheet.create({
     input: {
@@ -29,8 +31,11 @@ class RoutineScreen extends React.Component {
     static navigationOptions = ({ navigation }) => ({
         title: navigation.state.params.name,
     });
+    componentWillMount() {
+        this.props.getExercises(this.props.navigation.state.params._id);
+    }
     render() {
-        const { changeText, addExercise, exercises, text, navigation } = this.props
+        const { changeText, createExercise, deleteExercise, exercises, text, navigation } = this.props
         return (
             <Container>
                 <Content padder keyboardShouldPersistTaps='handled'>
@@ -38,15 +43,25 @@ class RoutineScreen extends React.Component {
                         <Input autoCapitalize='words' value={text} onChangeText={(text) => changeText(text)} placeholder="eg. Squats, Bench Press, etc. " />
                     </Item>
                     <Item style={styles.button}>
-                        <Button onPress={() => addExercise(text)}><Text>ADD EXERCISE</Text></Button>
+                        <Button onPress={() => createExercise(text, navigation.state.params._id)}><Text>ADD EXERCISE</Text></Button>
                     </Item>
                     {exercises.length > 0 &&
                         <Card>
                             <List dataArray={exercises}
                                 renderRow={(item) =>
-                                    <ListItem onPress={() => navigation.navigate("Exercise", item)} >
-                                        <CardItem style={{ padding: 5 }}>
-                                            <Body><Text style={styles.bold}>{item}</Text></Body>
+                                    <ListItem
+                                        onPress={() => navigation.navigate("Exercise", item)}
+                                        onLongPress={
+                                            () => Alert.alert("Delete","Are you sure you want to delete '" + item.name + "' exercise?",
+                                                [
+                                                    { text: "Delete", onPress: () => deleteExercise(item._id) },
+                                                    { text: "Cancel" }
+                                                ]
+                                            )
+                                        }
+                                    >
+                                        <CardItem >
+                                            <Body><Text style={styles.bold}>{item.name}</Text></Body>
                                             <Right><Icon name="arrow-forward" /></Right>
                                         </CardItem>
                                     </ListItem>
@@ -67,4 +82,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { addExercise, changeText })(RoutineScreen);
+export default connect(mapStateToProps, { getExercises, createExercise, deleteExercise, changeText })(RoutineScreen);
