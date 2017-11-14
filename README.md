@@ -1,8 +1,8 @@
-#Work Out Log Book
+# Work Out Log Book
 
 This app is to log one's reps and amount of weight during weight-lifting exercises at the gym
 
-##Technologies Used
+## Technologies Used
 
   This app is build as an exercise to brush up on the following technologies
   
@@ -18,7 +18,7 @@ This app is to log one's reps and amount of weight during weight-lifting exercis
     JavaScript
   ...
   
-##How to start application
+## How to start application
 
   ...
     Clone repository
