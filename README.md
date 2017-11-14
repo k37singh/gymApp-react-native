@@ -1,7 +1,5 @@
 # Work Out Log Book
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-
 This app is to log one's reps and amount of weight during weight-lifting exercises at the gym
 
 ## Technologies Used
