@@ -23,7 +23,7 @@ JavaScript
 ```
 Clone repository
 Install MongoDb,
-Follow Steps for Building Projects With Native Code of this link https://facebook.github.io/react-native/docs/getting-started.html
+Follow Steps for Building Projects With Native Code of this link [React-Native](https://facebook.github.io/react-native/docs/getting-started.html)
 run command "npm install"
 start mongodb
 navigate to 'backend' folder and run command "npm run start" (to run the server) 
