@@ -1,5 +1,7 @@
 # Work Out Log Book
 
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+
 This app is to log one's reps and amount of weight during weight-lifting exercises at the gym
 
 ## Technologies Used
@@ -19,13 +21,11 @@ JavaScript
 ```
   
 ## How to start application
+* Clone repository
+* Install MongoDb,
+* Follow Steps for Building Projects With Native Code of this link [React-Native](https://facebook.github.io/react-native/docs/getting-started.html)
+* run command ```npm install```
+* start mongodb
+* navigate to 'backend' folder and run command ```npm run start``` (to run the server) 
+* navigate back to root folder and run command ```react-native run-android```
 
-```
-Clone repository
-Install MongoDb,
-Follow Steps for Building Projects With Native Code of this link [React-Native](https://facebook.github.io/react-native/docs/getting-started.html)
-run command "npm install"
-start mongodb
-navigate to 'backend' folder and run command "npm run start" (to run the server) 
-navigate back to root folder and run command react-native run-android
-```
